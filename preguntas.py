@@ -11,6 +11,17 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 
 """
+import pandas as pd
+
+
+
+def leer_archivo():
+    with open('data.csv', encoding='utf-8') as file:
+        content = file.readlines()
+    registros=[]
+    for renglon in content:
+        registros.append(renglon.split("\t"))
+    return registros
 
 
 def pregunta_01():
@@ -21,8 +32,11 @@ def pregunta_01():
     214
 
     """
-    return
-
+    registros=leer_archivo()
+    contador=0
+    for i in registros:
+        contador+=int(i[1])
+    return contador
 
 def pregunta_02():
     """
@@ -39,8 +53,16 @@ def pregunta_02():
     ]
 
     """
-    return
+    registros=leer_archivo()
+    diccionario={}
+    
+    for i in registros:
+        if i[0] not in diccionario.keys():
+            diccionario[i[0]] = 0
+        diccionario[i[0]]+=1
 
+    tuplas = [(key, value) for key, value in diccionario.items()]
+    return sorted(tuplas)
 
 def pregunta_03():
     """
@@ -57,8 +79,16 @@ def pregunta_03():
     ]
 
     """
-    return
+    registros=leer_archivo()
+    diccionario={}
+    for i in registros:
+        if i[0] not in diccionario.keys():
+            diccionario[i[0]] = int(i[1])
+        else:
+            diccionario[i[0]]+=int(i[1])
 
+    tuplas = [(key, value) for key, value in diccionario.items()]
+    return sorted(tuplas)
 
 def pregunta_04():
     """
@@ -82,8 +112,17 @@ def pregunta_04():
     ]
 
     """
-    return
+    registros=leer_archivo()
+    diccionario={}
+    for i in registros:
+        mes=i[2].split("-")[1]
+        if mes not in diccionario.keys():
+            diccionario[mes] = 1
+        else:
+            diccionario[mes] += 1
 
+    tuplas = [(key, value) for key, value in diccionario.items()]
+    return sorted(tuplas)
 
 def pregunta_05():
     """
@@ -100,7 +139,20 @@ def pregunta_05():
     ]
 
     """
-    return
+    registros=leer_archivo()
+    diccionario={}
+    for i in registros:
+        if i[0] not in diccionario.keys():
+            diccionario[i[0]] = [int(i[1]),int(i[1])]
+        else:
+            if diccionario[i[0]][1] > int(i[1]):
+                diccionario[i[0]][1] = int(i[1])
+            if diccionario[i[0]][0] < int(i[1]):
+                diccionario[i[0]][0] = int(i[1])
+    
+    tuplas = [(key, value[0], value[1]) for key, value in diccionario.items()]
+
+    return sorted(tuplas)
 
 
 def pregunta_06():
@@ -125,8 +177,20 @@ def pregunta_06():
     ]
 
     """
-    return
-
+    registros=leer_archivo()
+    diccionario={}
+    for i in registros:
+        for llave in i[4].split(","):
+            llave, valor = llave.split(":")
+            if llave not in diccionario.keys():
+                diccionario[llave] = [int(valor),int(valor)]
+            else:
+                 if diccionario[llave][0] > int(valor):
+                     diccionario[llave][0] = int(valor)
+                 if diccionario[llave][1] < int(valor):
+                     diccionario[llave][1] = int(valor)
+    tuplas = [(key, value[0], value[1]) for key, value in diccionario.items()]
+    return sorted(tuplas)
 
 def pregunta_07():
     """
@@ -149,7 +213,15 @@ def pregunta_07():
     ]
 
     """
-    return
+    registros=leer_archivo()
+    diccionario={}
+    for i in registros:
+        if int(i[1]) not in diccionario.keys():
+            diccionario[int(i[1])] = [i[0]]
+        else:
+            diccionario[int(i[1])].append(i[0])
+    tuplas = [(key, value) for key, value in diccionario.items()]
+    return sorted(tuplas)
 
 
 def pregunta_08():
@@ -174,8 +246,16 @@ def pregunta_08():
     ]
 
     """
-    return
+    registros=leer_archivo()
+    diccionario={}
+    for i in registros:
+        if int(i[1]) not in diccionario.keys():
+            diccionario[int(i[1])] = [i[0]]
+        elif i[0] not in diccionario[int(i[1])]:
+            diccionario[int(i[1])].append(i[0])
+    tuplas = [(key, sorted(value)) for key, value in diccionario.items()]
 
+    return sorted(tuplas)
 
 def pregunta_09():
     """
@@ -197,7 +277,17 @@ def pregunta_09():
     }
 
     """
-    return
+    registros=leer_archivo()
+    diccionario={}
+    for i in registros:
+        lista = i[4].split(',')
+        for j in lista:
+            clave = j.split(':')[0]
+            if clave not in diccionario.keys():
+                diccionario[clave] = 1
+            else:
+                diccionario[clave] += 1
+    return diccionario
 
 
 def pregunta_10():
@@ -218,7 +308,14 @@ def pregunta_10():
 
 
     """
-    return
+    registros=leer_archivo()
+    lista = []
+    for element in registros:
+        cantidad_col4 = len(element[3].split(','))
+        cantidad_col5 = len(element[4].split(','))
+        tupla = (element[0],cantidad_col4,cantidad_col5)
+        lista.append(tupla)
+    return lista
 
 
 def pregunta_11():
@@ -236,10 +333,17 @@ def pregunta_11():
         "f": 134,
         "g": 35,
     }
-
-
     """
-    return
+    registros=leer_archivo()
+    diccionario={}
+    for i in registros:
+        lista = i[3].split(',')
+        for j in lista:
+            if j not in diccionario.keys():
+                diccionario[j] = int(i[1])
+            else:
+                diccionario[j] += int(i[1])
+    return diccionario
 
 
 def pregunta_12():
@@ -257,4 +361,14 @@ def pregunta_12():
     }
 
     """
-    return
+    registros=leer_archivo()
+    diccionario={}
+    for i in registros:
+        lista = i[4].split(',')
+        for j in lista:
+            value = j.split(":")[1]
+            if i[0] not in diccionario.keys():
+                diccionario[i[0]] = int(value)
+            else:
+                diccionario[i[0]] += int(value)             
+    return diccionario
