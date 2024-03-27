@@ -11,9 +11,6 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 
 """
-import pandas as pd
-
-
 
 def leer_archivo():
     with open('data.csv', encoding='utf-8') as file:
