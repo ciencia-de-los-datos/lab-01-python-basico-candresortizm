@@ -15,7 +15,7 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 def leer_archivo():
     with open('data.csv', encoding='utf-8') as file:
         content = file.readlines()
-    registros=[]
+    registros = []
     for renglon in content:
         registros.append(renglon.split("\t"))
     return registros
